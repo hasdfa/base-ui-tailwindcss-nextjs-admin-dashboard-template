@@ -9,7 +9,9 @@ export default function SidebarContent() {
     <>
       <div className="flex flex-row items-center justify-between pb-4">
         <Typography variant="h4">Acme Co.</Typography>
-        <Button size="sm">Mode</Button>
+        <Button size="sm" href="/components">
+          UI
+        </Button>
       </div>
       <SidebarMenu />
     </>
