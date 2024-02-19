@@ -1,11 +1,13 @@
 'use client'
 
-import { DataGrid } from '@mui/x-data-grid'
+import { DataGrid, DataGridProps } from '@mui/x-data-grid'
 
 import columns from './columns'
 import rows from './rows'
 
-export default function DashboardOrdersTable() {
+export default function DashboardOrdersTable(
+  props: Omit<DataGridProps, 'rows' | 'columns' | 'initialState'>
+) {
   return (
     <DataGrid
       rows={rows}
@@ -27,6 +29,7 @@ export default function DashboardOrdersTable() {
           border: 'none',
         },
       }}
+      {...props}
     />
   )
 }
