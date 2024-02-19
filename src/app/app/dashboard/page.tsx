@@ -1,8 +1,11 @@
 import DashboardLayout from '@/components/layouts/Dashboard'
-import Typography from '@/components/uikit/Typography'
-import Card from '@/components/uikit/Card'
+
 import DashboardSalesChart from '@/components/app/DashboardSalesChart'
+import DashboardOrdersTable from '@/components/app/DashboardOrdersTable'
+
+import Typography from '@/components/uikit/Typography'
 import Button from '@/components/uikit/Button'
+import Card from '@/components/uikit/Card'
 
 export default function DashboardHome() {
   return (
@@ -24,6 +27,12 @@ export default function DashboardHome() {
           <span className="text-xl text-primary-500">$3,024.00</span>
         </div>
         <Button variant="outlined">View balance</Button>
+      </Card>
+      <Card className="col-span-12 min-h-[350px]">
+        <Typography variant="subtitle2" className="text-lg">
+          Recent orders
+        </Typography>
+        <DashboardOrdersTable />
       </Card>
     </DashboardLayout>
   )
