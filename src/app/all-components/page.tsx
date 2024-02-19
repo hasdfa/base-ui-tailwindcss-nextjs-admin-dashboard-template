@@ -1,6 +1,7 @@
 import Button from '@/components/uikit/Button'
 import Typography from '@/components/uikit/Typography'
 import * as React from 'react'
+import DashboardLayout from '@/components/layouts/Dashboard'
 
 const buttons = [
   { variant: 'contained', size: 'sm' },
@@ -45,7 +46,7 @@ const typographyVariants = [
 
 export default function ComponentsPage() {
   return (
-    <div className="w-[100vw] h-[100vh] flex flex-col items-center justify-center">
+    <DashboardLayout>
       <table>
         <tbody>
           <tr>
@@ -77,6 +78,6 @@ export default function ComponentsPage() {
           ))}
         </tbody>
       </table>
-    </div>
+    </DashboardLayout>
   )
 }

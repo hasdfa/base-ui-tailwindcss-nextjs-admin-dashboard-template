@@ -12,6 +12,7 @@ import AssignmentIcon from '@/components/icons/AssignmentIcon'
 import QuestionAnswerIcon from '@/components/icons/QuestionAnswerIcon'
 import GroupIcon from '@/components/icons/GroupIcon'
 import { twMerge } from 'tailwind-merge'
+import Button from '@/components/uikit/Button'
 
 const menuItems = [
   {
@@ -91,6 +92,7 @@ const menuItems = [
 
 export default function SidebarMenu() {
   const pathname = usePathname()
+
   return (
     <>
       {menuItems.map((item) => (
@@ -99,6 +101,7 @@ export default function SidebarMenu() {
           startIcon={item.startIcon}
           endIcon={item.endIcon}
           selected={pathname === item.href}
+          className="my-0.5"
           href={item.href}
           items={item.items?.map((it) => ({
             ...it,
@@ -108,6 +111,12 @@ export default function SidebarMenu() {
           {item.label}
         </MenuItem>
       ))}
+
+      <div className="absolute bottom-1 left-0 right-0 h-10 flex flex-col items-center px-2">
+        <Button variant="contained" className="w-full" href="/all-components">
+          All components
+        </Button>
+      </div>
     </>
   )
 }

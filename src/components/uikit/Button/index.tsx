@@ -12,7 +12,7 @@ interface ButtonProps extends BaseButtonProps {
 
 const classes = {
   root: twMerge(
-    'cursor-pointer select-none',
+    'text-center cursor-pointer select-none',
     'enabled:active:scale-[0.98]',
     'transform origin-center transition-all',
     'focus-visible:outline-0 focus-visible:ring-2 focus-visible:ring-brand-500',

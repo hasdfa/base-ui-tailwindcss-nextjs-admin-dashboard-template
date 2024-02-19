@@ -1,16 +1,12 @@
 import * as React from 'react'
 import { twMerge } from 'tailwind-merge'
 
-import {
-  TransitionContext,
-  useTransitionTrigger,
-} from '@mui/base/useTransition'
-
 import BaseMenuItem, {
   BaseMenuItemProps,
 } from '@/components/uikit/MenuItem/Base'
-import SlideDown from '@/components/uikit/SlideDown'
 import KeyboardArrowDownIcon from '@/components/icons/KeyboardArrowDownIcon'
+
+import ExpandableMenuItemChild from './expandable'
 
 export interface ExpandableMenuItemProps extends BaseMenuItemProps {
   items: {
@@ -23,8 +19,6 @@ export interface ExpandableMenuItemProps extends BaseMenuItemProps {
 const classes = {
   endIconRoot: 'transform transition-transform duration-200',
   endIconOpen: 'rotate-180',
-
-  childItemsRoot: 'flex flex-col items-stretch gap-1',
 }
 
 const ExpandableMenuItem = React.forwardRef(function ExpandableMenuItem(
@@ -33,8 +27,6 @@ const ExpandableMenuItem = React.forwardRef(function ExpandableMenuItem(
 ) {
   const somethingSelected = items.some((it) => it.selected)
   const [open, setOpen] = React.useState(somethingSelected)
-  const { contextValue } = useTransitionTrigger(open)
-  const containerId = React.useId()
 
   return (
     <>
@@ -53,26 +45,7 @@ const ExpandableMenuItem = React.forwardRef(function ExpandableMenuItem(
       >
         {children}
       </BaseMenuItem>
-      <TransitionContext.Provider value={contextValue}>
-        <SlideDown>
-          <div
-            id={containerId}
-            aria-hidden={!open}
-            className={classes.childItemsRoot}
-          >
-            {items.map((it, key) => (
-              <BaseMenuItem
-                key={key}
-                href={it.href}
-                selected={it.selected}
-                startIcon={<div />}
-              >
-                {it.label}
-              </BaseMenuItem>
-            ))}
-          </div>
-        </SlideDown>
-      </TransitionContext.Provider>
+      <ExpandableMenuItemChild open={open} items={items} />
     </>
   )
 })

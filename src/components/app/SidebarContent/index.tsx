@@ -2,16 +2,15 @@ import * as React from 'react'
 
 import Typography from '@/components/uikit/Typography'
 import SidebarMenu from '@/components/app/SidebarMenu'
-import Button from '@/components/uikit/Button'
 
 export default function SidebarContent() {
   return (
     <>
-      <div className="flex flex-row items-center justify-between pb-4">
+      <div className="flex flex-row items-center justify-start pb-4 gap-2">
+        <div className="text-sm text-white bg-gradient-brand px-2.5 py-1 rounded-md">
+          A
+        </div>
         <Typography variant="h4">Acme Co.</Typography>
-        <Button size="sm" href="/components">
-          UI
-        </Button>
       </div>
       <SidebarMenu />
     </>
