@@ -1,0 +1,10 @@
+:root {
+  --base-Drawer-width: 220px;
+  --base-Drawer-visible-width: var(--base-Drawer-width);
+}
+
+@media (max-width: 900px) {
+  :root {
+    --base-Drawer-visible-width: 0;
+  }
+}

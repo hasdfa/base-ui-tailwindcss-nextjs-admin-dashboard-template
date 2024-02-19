@@ -1,0 +1,5 @@
+.root :first-child:not(.label),
+.root :last-child:not(.label) {
+    width: 18px;
+    height: 18px;
+}
