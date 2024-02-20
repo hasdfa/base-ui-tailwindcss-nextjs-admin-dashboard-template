@@ -1,4 +1,5 @@
 import * as React from 'react'
+import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
 
 import { Button, ButtonProps } from '@mui/base/Button'
@@ -45,7 +46,7 @@ const BaseMenuItem = React.forwardRef(function BaseMenuItem(
   }: BaseMenuItemProps,
   ref: React.ForwardedRef<HTMLButtonElement>
 ) {
-  return (
+  const child = (
     <Button
       {...props}
       className={twMerge(classes.root, selected && classes.selected, className)}
@@ -55,6 +56,14 @@ const BaseMenuItem = React.forwardRef(function BaseMenuItem(
       <div className={classes.label}>{children}</div>
       {endIcon}
     </Button>
+  )
+
+  return props.href ? (
+    <Link href={props.href} passHref legacyBehavior>
+      {child}
+    </Link>
+  ) : (
+    child
   )
 })
 

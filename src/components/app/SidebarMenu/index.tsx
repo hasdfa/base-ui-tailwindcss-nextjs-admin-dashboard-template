@@ -13,6 +13,7 @@ import QuestionAnswerIcon from '@/components/icons/QuestionAnswerIcon'
 import GroupIcon from '@/components/icons/GroupIcon'
 import { twMerge } from 'tailwind-merge'
 import Button from '@/components/uikit/Button'
+import Link from 'next/link'
 
 const menuItems = [
   {
@@ -113,9 +114,11 @@ export default function SidebarMenu() {
       ))}
 
       <div className="absolute bottom-1 left-0 right-0 h-10 flex flex-col items-center px-2">
-        <Button variant="contained" className="w-full" href="/all-components">
-          All components
-        </Button>
+        <Link href="/all-components" passHref legacyBehavior>
+          <Button variant="contained" className="w-full" href="/all-components">
+            All components
+          </Button>
+        </Link>
       </div>
     </>
   )

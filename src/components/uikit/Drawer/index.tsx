@@ -28,7 +28,7 @@ const classes = {
 }
 
 const Drawer = React.forwardRef(function Drawer(
-  props: DrawerProps,
+  { mobileOpen, mobileOnClose, className, ...props }: DrawerProps,
   ref: React.ForwardedRef<HTMLDivElement>
 ) {
   return (
@@ -37,18 +37,15 @@ const Drawer = React.forwardRef(function Drawer(
         {...props}
         className={twMerge(
           classes.root,
-          props.mobileOpen && classes.mobileOpen,
-          props.className
+          mobileOpen && classes.mobileOpen,
+          className
         )}
         ref={ref}
       >
         {props.children}
       </div>
-      {props.mobileOpen && (
-        <div
-          className={classes.mobileDrawerBackdrop}
-          onClick={props.mobileOnClose}
-        />
+      {mobileOpen && (
+        <div className={classes.mobileDrawerBackdrop} onClick={mobileOnClose} />
       )}
     </>
   )
