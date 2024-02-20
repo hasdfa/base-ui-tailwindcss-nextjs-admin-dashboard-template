@@ -1,25 +1,17 @@
 import * as React from 'react'
 import { twMerge } from 'tailwind-merge'
+import { HTMLAttributes } from 'react'
 
-type ComponentsMap = {
-  h1: HTMLHeadElement
-  h2: HTMLHeadElement
-  h3: HTMLHeadElement
-  h4: HTMLHeadElement
-  div: HTMLSpanElement
-  span: HTMLSpanElement
-}
-
-type TypographyProps<Component extends keyof ComponentsMap> = {
+type TypographyProps<Component extends string> = {
   component?: Component
   variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'subtitle1' | 'subtitle2' | 'body'
-} & (Component extends keyof ComponentsMap
-  ? React.HTMLProps<ComponentsMap[Component]>
+} & (Component extends string
+  ? React.HTMLProps<HTMLAttributes<Component>>
   : React.HTMLProps<HTMLSpanElement>)
 
 const variantDefaultComponentMap: Record<
   NonNullable<TypographyProps<any>['variant']>,
-  keyof ComponentsMap
+  string
 > = {
   h1: 'h1',
   h2: 'h2',
@@ -37,14 +29,14 @@ const variants: Record<NonNullable<TypographyProps<any>['variant']>, string> = {
   h4: 'font-semibold text-xl py-.2',
   subtitle1: 'font-medium text-xl text-black py-1.5',
   subtitle2: 'font-semibold text-sm text-black py-1.5',
-  body: 'text-gray-600 py-1',
+  body: 'text-sm text-gray-600 py-1',
 }
 
 const Typography = React.forwardRef(function Typography<
-  Component extends keyof ComponentsMap = 'span',
+  Component extends string = 'span',
 >(
   { variant, component, ...props }: TypographyProps<Component>,
-  ref: React.ForwardedRef<ComponentsMap[Component]>
+  ref: React.ForwardedRef<HTMLAttributes<Component>>
 ) {
   return React.createElement(
     (component
