@@ -20,11 +20,14 @@ const classes = {
     'transform -translate-x-full md:translate-x-0'
   ),
   mobileOpen: 'translate-x-0',
+
   mobileDrawerBackdrop: twMerge(
     'ui-Drawer-backdrop',
+    'transition-opacity opacity-0 transform translate-x-full',
     'fixed top-0 left-0 w-full h-full bg-black/30',
     'z-40'
   ),
+  mobileDrawerBackdropOpen: 'translate-x-0 opacity-100',
 }
 
 const Drawer = React.forwardRef(function Drawer(
@@ -44,9 +47,13 @@ const Drawer = React.forwardRef(function Drawer(
       >
         {props.children}
       </div>
-      {mobileOpen && (
-        <div className={classes.mobileDrawerBackdrop} onClick={mobileOnClose} />
-      )}
+      <div
+        className={twMerge(
+          classes.mobileDrawerBackdrop,
+          mobileOpen && classes.mobileDrawerBackdropOpen
+        )}
+        onClick={mobileOnClose}
+      />
     </>
   )
 })
