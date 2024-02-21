@@ -18,16 +18,15 @@ export default function DashboardLayout(props: DashboardLayoutProps) {
   const mobileOnClose = React.useCallback(() => setMobileOpen(false), [])
 
   return (
-    <div className="min-h-[100dvh] bg-white">
+    <div className="min-h-[100dvh]">
       <Drawer mobileOpen={mobileOpen} mobileOnClose={mobileOnClose}>
         <SidebarContent mobileOnClose={mobileOnClose} />
       </Drawer>
       <main
         className={twMerge(
-          'h-[100dvh] px-4 md:px-6 lg:px-8 py-4',
+          'min-h-[100dvh] px-4 md:px-6 lg:px-8 py-4',
           'ml-[var(--base-Drawer-visible-width)]',
-          'transition-all transition-duration-500',
-          'bg-gray-50'
+          'transition-all transition-duration-500'
         )}
       >
         <header className="flex flex-row items-center justify-between mb-4 pb-4 md:hidden border-b border-gray-200">
