@@ -10,6 +10,8 @@ const ContainerDimensionsProvider = ({
   const [dimensions, setDimensions] = React.useState({ width: 0, height: 0 })
 
   React.useLayoutEffect(() => {
+    let isMounted = true
+
     if (targetRef.current) {
       setDimensions({
         width: targetRef.current.offsetWidth,
@@ -17,8 +19,8 @@ const ContainerDimensionsProvider = ({
       })
     }
 
-    const onResizeHandler = () => {
-      if (targetRef.current) {
+    const updateDimensions = () => {
+      if (isMounted && targetRef.current) {
         setDimensions({
           width: targetRef.current.offsetWidth,
           height: targetRef.current.offsetHeight,
@@ -26,8 +28,22 @@ const ContainerDimensionsProvider = ({
       }
     }
 
+    let latestTimeout: NodeJS.Timeout | null = null
+    const onResizeHandler = () => {
+      if (latestTimeout) {
+        clearTimeout(latestTimeout)
+        latestTimeout = null
+      }
+
+      updateDimensions()
+      latestTimeout = setTimeout(() => {
+        updateDimensions()
+      }, 500)
+    }
+
     window.addEventListener('resize', onResizeHandler)
     return () => {
+      isMounted = false
       window.removeEventListener('resize', onResizeHandler)
     }
   }, [])

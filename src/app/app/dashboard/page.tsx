@@ -11,7 +11,7 @@ export default function DashboardHome() {
       <Typography component="h1" variant="h2" className="col-span-12">
         Dashboard
       </Typography>
-      <Card className="col-span-12 md:col-span-7 min-h-[250px]">
+      <Card className="col-span-12 md:col-span-7 min-h-[250px] pr-0">
         <Typography variant="subtitle2" className="text-lg px-2 pt-1 pb-0">
           Today sales ($)
         </Typography>

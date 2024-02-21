@@ -15,7 +15,7 @@ interface DashboardSalesChartProps {
 
 export default function DashboardSalesChart(props: DashboardSalesChartProps) {
   return (
-    <ContainerDimensionsProvider className="w-full">
+    <ContainerDimensionsProvider style={{ width: 'calc(100% + 16px)' }}>
       {({ width }) => (
         <LineChart
           height={props.height}
