@@ -1,4 +1,3 @@
-import DashboardLayout from '@/components/layouts/Dashboard'
 import Typography from '@/components/uikit/Typography'
 import Card from '@/components/uikit/Card'
 
@@ -6,7 +5,7 @@ import DashboardOrdersTable from '@/components/app/DashboardOrdersTable'
 
 export default function DashboardHome() {
   return (
-    <DashboardLayout containerClassName="flex flex-col h-full">
+    <>
       <Typography component="h1" variant="h2" className="col-span-12">
         Orders
       </Typography>
@@ -19,6 +18,6 @@ export default function DashboardHome() {
         </Typography>
         <DashboardOrdersTable className="flex-1" />
       </Card>
-    </DashboardLayout>
+    </>
   )
 }

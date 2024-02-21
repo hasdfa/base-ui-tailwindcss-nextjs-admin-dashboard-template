@@ -35,12 +35,7 @@ export default function ExpandableMenuItemChild({
           className={classes.childItemsRoot}
         >
           {items.map((it, key) => (
-            <BaseMenuItem
-              key={key}
-              href={it.href}
-              selected={it.selected}
-              startIcon={<div />}
-            >
+            <BaseMenuItem key={key} {...it} startIcon={it.startIcon || <div />}>
               {it.label}
             </BaseMenuItem>
           ))}

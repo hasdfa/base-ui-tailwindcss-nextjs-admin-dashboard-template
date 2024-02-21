@@ -1,5 +1,3 @@
-import DashboardLayout from '@/components/layouts/Dashboard'
-
 import DashboardSalesChart from '@/components/app/DashboardSalesChart'
 import DashboardOrdersTable from '@/components/app/DashboardOrdersTable'
 
@@ -9,7 +7,7 @@ import Card from '@/components/uikit/Card'
 
 export default function DashboardHome() {
   return (
-    <DashboardLayout>
+    <>
       <Typography component="h1" variant="h2" className="col-span-12">
         Dashboard
       </Typography>
@@ -34,6 +32,6 @@ export default function DashboardHome() {
         </Typography>
         <DashboardOrdersTable />
       </Card>
-    </DashboardLayout>
+    </>
   )
 }

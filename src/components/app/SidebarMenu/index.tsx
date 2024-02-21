@@ -14,6 +14,8 @@ import GroupIcon from '@/components/icons/GroupIcon'
 import { twMerge } from 'tailwind-merge'
 import Button from '@/components/uikit/Button'
 import Link from 'next/link'
+import LoadingSpinner from '@/components/uikit/LoadingSpinner'
+import useDelayedValue from '@/app/hooks/useDelayedValue'
 
 const menuItems = [
   {
@@ -92,30 +94,65 @@ const menuItems = [
 ]
 
 export default function SidebarMenu() {
-  const pathname = usePathname()
+  const originalPathname = usePathname()
+  const [optimisticPathname, setOptimisticPathname] =
+    React.useState(originalPathname)
+  const isLoading = useDelayedValue(
+    optimisticPathname !== originalPathname,
+    250
+  )
+
+  React.useEffect(() => {
+    setOptimisticPathname(originalPathname)
+  }, [originalPathname])
+
+  const getStartIcon = (selected: boolean) => {
+    return selected && isLoading ? (
+      <div className="flex items-center justify-center">
+        <LoadingSpinner size="sm" />
+      </div>
+    ) : null
+  }
 
   return (
     <>
-      {menuItems.map((item) => (
-        <MenuItem
-          key={item.label}
-          startIcon={item.startIcon}
-          endIcon={item.endIcon}
-          selected={pathname === item.href}
-          className="my-0.5"
-          href={item.href}
-          items={item.items?.map((it) => ({
-            ...it,
-            selected: it.href === pathname,
-          }))}
-        >
-          {item.label}
-        </MenuItem>
-      ))}
+      {menuItems.map((item) => {
+        const selected = optimisticPathname === item.href
+        return (
+          <MenuItem
+            key={item.label}
+            startIcon={getStartIcon(selected) || item.startIcon}
+            endIcon={item.endIcon}
+            selected={selected}
+            className="my-0.5"
+            items={item.items?.map((it) => {
+              const selected = it.href === optimisticPathname
+              return {
+                ...it,
+                startIcon: getStartIcon(selected),
+                selected: it.href === optimisticPathname,
+                onClick: () => setOptimisticPathname(it.href),
+              }
+            })}
+            {...(item.href
+              ? {
+                  href: item.href,
+                  onClick: () => setOptimisticPathname(item.href),
+                }
+              : {})}
+          >
+            {item.label}
+          </MenuItem>
+        )
+      })}
 
       <div className="absolute bottom-1 left-0 right-0 h-10 flex flex-col items-center px-2">
-        <Link href="/all-components" passHref legacyBehavior>
-          <Button variant="contained" className="w-full" href="/all-components">
+        <Link href="/app/all-components" passHref legacyBehavior>
+          <Button
+            variant="contained"
+            className="w-full"
+            href="/app/all-components"
+          >
             All components
           </Button>
         </Link>

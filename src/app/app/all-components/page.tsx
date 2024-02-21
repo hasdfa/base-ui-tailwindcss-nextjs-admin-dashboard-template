@@ -1,12 +1,11 @@
 import * as React from 'react'
+import { twMerge } from 'tailwind-merge'
 
 import Button from '@/components/uikit/Button'
 import Typography from '@/components/uikit/Typography'
-
-import DashboardLayout from '@/components/layouts/Dashboard'
+import LoadingSpinner from '@/components/uikit/LoadingSpinner'
 
 import styles from './page.module.css'
-import { twMerge } from 'tailwind-merge'
 
 const buttons = {
   variants: ['contained', 'outlined', 'text'],
@@ -40,6 +39,8 @@ const typographyVariants = [
   },
 ]
 
+const spinnerSizes = ['sm', 'md', 'lg', 'xl']
+
 function ParamLabel({
   children,
   className,
@@ -56,7 +57,7 @@ function ParamLabel({
 
 export default function ComponentsPage() {
   return (
-    <DashboardLayout containerClassName="flex flex-col items-start w-full">
+    <div className="col-span-12 gap-4 flex flex-col items-start w-full">
       <Typography variant="h1">All components</Typography>
 
       <Typography id="button" variant="h2" component="a" href="#button">
@@ -116,6 +117,30 @@ export default function ComponentsPage() {
           ))}
         </tbody>
       </table>
-    </DashboardLayout>
+
+      <Typography
+        id="loading-spinner"
+        variant="h2"
+        className="pt-6"
+        component="a"
+        href="#loading-spinner"
+      >
+        LoadingSpinner
+      </Typography>
+      <table className={styles.table}>
+        <tbody className="gap-2">
+          {spinnerSizes.map((size) => (
+            <tr key={size}>
+              <td>
+                <ParamLabel className="pr-2">{size}</ParamLabel>
+              </td>
+              <td>
+                <LoadingSpinner size={size as any} />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   )
 }

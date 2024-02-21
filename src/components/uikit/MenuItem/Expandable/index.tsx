@@ -13,6 +13,10 @@ export interface ExpandableMenuItemProps extends BaseMenuItemProps {
     selected?: boolean
     label: string
     href: string
+
+    startIcon?: React.ReactNode
+    endIcon?: React.ReactNode
+    onClick?: () => void
   }[]
 }
 
