@@ -15,14 +15,12 @@ interface DashboardLayoutProps {
 
 export default function DashboardLayout(props: DashboardLayoutProps) {
   const [mobileOpen, setMobileOpen] = React.useState(false)
+  const mobileOnClose = React.useCallback(() => setMobileOpen(false), [])
 
   return (
     <div className="min-h-[100dvh] bg-white">
-      <Drawer
-        mobileOpen={mobileOpen}
-        mobileOnClose={() => setMobileOpen(false)}
-      >
-        <SidebarContent />
+      <Drawer mobileOpen={mobileOpen} mobileOnClose={mobileOnClose}>
+        <SidebarContent mobileOnClose={mobileOnClose} />
       </Drawer>
       <main
         className={twMerge(

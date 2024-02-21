@@ -4,11 +4,15 @@ import Typography from '@/components/uikit/Typography'
 import SidebarMenu from '@/components/app/SidebarMenu'
 import CompanyLogo from '@/components/app/CompanyLogo'
 
-export default function SidebarContent() {
+interface SidebarContentProps {
+  mobileOnClose: () => void
+}
+
+export default function SidebarContent(props: SidebarContentProps) {
   return (
     <>
       <CompanyLogo />
-      <SidebarMenu />
+      <SidebarMenu mobileOnClose={props.mobileOnClose} />
     </>
   )
 }

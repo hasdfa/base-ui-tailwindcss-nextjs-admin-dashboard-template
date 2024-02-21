@@ -36,4 +36,6 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 ### Menu items optimistic loading
 
+P.S. Reproducible with slow internet connection
+
 <img src="./.github/assets/menu-items-loading.gif"/>
