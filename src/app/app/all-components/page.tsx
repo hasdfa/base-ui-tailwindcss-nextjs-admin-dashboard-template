@@ -63,34 +63,36 @@ export default function ComponentsPage() {
       <Typography id="button" variant="h2" component="a" href="#button">
         Button
       </Typography>
-      <table className={styles.table}>
-        <thead>
-          <tr>
-            <th />
-            {buttons.variants.map((variant) => (
-              <th key={variant} align="left">
-                <ParamLabel>{variant}</ParamLabel>
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody className="gap-2">
-          {buttons.sizes.map((size) => (
-            <tr key={size}>
-              <td>
-                <ParamLabel className="pr-2">{size}</ParamLabel>
-              </td>
+      <div className="max-w-full overflow-x-auto">
+        <table className={styles.table}>
+          <thead>
+            <tr>
+              <th />
               {buttons.variants.map((variant) => (
-                <td key={`${variant}-${size}`}>
-                  <Button variant={variant as any} size={size as any}>
-                    Button
-                  </Button>
-                </td>
+                <th key={variant} align="left">
+                  <ParamLabel>{variant}</ParamLabel>
+                </th>
               ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody className="gap-2">
+            {buttons.sizes.map((size) => (
+              <tr key={size}>
+                <td>
+                  <ParamLabel className="pr-2">{size}</ParamLabel>
+                </td>
+                {buttons.variants.map((variant) => (
+                  <td key={`${variant}-${size}`}>
+                    <Button variant={variant as any} size={size as any}>
+                      Button
+                    </Button>
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       <Typography
         id="typography"
@@ -101,22 +103,24 @@ export default function ComponentsPage() {
       >
         Typography
       </Typography>
-      <table className={styles.table}>
-        <tbody className="gap-2">
-          {typographyVariants.map(({ variant, label }) => (
-            <tr key={variant}>
-              <td>
-                <ParamLabel className="pr-2">{variant}</ParamLabel>
-              </td>
-              <td>
-                <Typography component="span" variant={variant as any}>
-                  {label}
-                </Typography>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="max-w-full overflow-x-auto">
+        <table className={styles.table}>
+          <tbody className="gap-2">
+            {typographyVariants.map(({ variant, label }) => (
+              <tr key={variant}>
+                <td>
+                  <ParamLabel className="pr-2">{variant}</ParamLabel>
+                </td>
+                <td>
+                  <Typography component="span" variant={variant as any}>
+                    {label}
+                  </Typography>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       <Typography
         id="loading-spinner"
@@ -127,20 +131,22 @@ export default function ComponentsPage() {
       >
         LoadingSpinner
       </Typography>
-      <table className={styles.table}>
-        <tbody className="gap-2">
-          {spinnerSizes.map((size) => (
-            <tr key={size}>
-              <td>
-                <ParamLabel className="pr-2">{size}</ParamLabel>
-              </td>
-              <td>
-                <LoadingSpinner size={size as any} />
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="max-w-full overflow-x-auto">
+        <table className={styles.table}>
+          <tbody className="gap-2">
+            {spinnerSizes.map((size) => (
+              <tr key={size}>
+                <td>
+                  <ParamLabel className="pr-2">{size}</ParamLabel>
+                </td>
+                <td>
+                  <LoadingSpinner size={size as any} />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   )
 }
