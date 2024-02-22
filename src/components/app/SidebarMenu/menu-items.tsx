@@ -82,6 +82,15 @@ const menuItems = [
       },
     ],
   },
+  {
+    label: 'Authentication',
+    items: [
+      {
+        label: 'Sign In',
+        href: '/auth/sign-in',
+      },
+    ],
+  },
 ]
 
 export default menuItems
