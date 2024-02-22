@@ -1,4 +1,3 @@
-import DashboardLayout from '@/components/layouts/Dashboard'
 import Typography from '@/components/uikit/Typography'
 
 export default function MessagesHome() {
