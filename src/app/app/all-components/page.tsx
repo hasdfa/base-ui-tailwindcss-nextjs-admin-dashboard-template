@@ -4,9 +4,9 @@ import { twMerge } from 'tailwind-merge'
 import Button from '@/components/uikit/Button'
 import Typography from '@/components/uikit/Typography'
 import LoadingSpinner from '@/components/uikit/LoadingSpinner'
+import Input from '@/components/uikit/Input'
 
 import styles from './page.module.css'
-import Input from '@/components/uikit/Input'
 
 const buttons = {
   variants: ['contained', 'outlined', 'text'],
