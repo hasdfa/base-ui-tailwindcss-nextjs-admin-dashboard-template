@@ -6,6 +6,7 @@ import Typography from '@/components/uikit/Typography'
 import LoadingSpinner from '@/components/uikit/LoadingSpinner'
 
 import styles from './page.module.css'
+import Input from '@/components/uikit/Input'
 
 const buttons = {
   variants: ['contained', 'outlined', 'text'],
@@ -93,6 +94,30 @@ export default function ComponentsPage() {
                 ))}
               </tr>
             ))}
+          </tbody>
+        </table>
+      </div>
+
+      <Typography
+        id="input"
+        variant="h2"
+        className="pt-6"
+        component="a"
+        href="#input"
+      >
+        Input
+      </Typography>
+      <div className="max-w-full overflow-x-auto">
+        <table className={styles.table}>
+          <tbody className="gap-2">
+            <tr>
+              <td>
+                <ParamLabel className="pr-2">Default</ParamLabel>
+              </td>
+              <td>
+                <Input placeholder="Default input" />
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
