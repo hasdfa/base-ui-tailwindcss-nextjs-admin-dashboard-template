@@ -61,8 +61,6 @@
     position: absolute;
     top: -3.9%;
     width: 24%;
-
-    @apply bg-gray-500;
 }
 
 .spinnerBar:nth-child(1) {

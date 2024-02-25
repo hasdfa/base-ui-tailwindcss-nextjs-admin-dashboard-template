@@ -5,7 +5,7 @@ import {
 } from '@mui/base/Button'
 import { twMerge } from 'tailwind-merge'
 
-interface ButtonProps extends BaseButtonProps {
+export interface ButtonProps extends BaseButtonProps {
   variant?: 'contained' | 'outlined' | 'text'
   size?: 'sm' | 'md' | 'lg'
 }

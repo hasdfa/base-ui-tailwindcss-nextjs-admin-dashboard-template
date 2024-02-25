@@ -39,7 +39,10 @@ const typographyVariants = [
   },
 ]
 
-const spinnerSizes = ['sm', 'md', 'lg', 'xl']
+const spinners = {
+  sizes: ['sm', 'md', 'lg', 'xl'],
+  colors: ['gray', 'white', 'brand', 'success', 'error', 'warning'],
+}
 
 function ParamLabel({
   children,
@@ -133,15 +136,27 @@ export default function ComponentsPage() {
       </Typography>
       <div className="max-w-full overflow-x-auto">
         <table className={styles.table}>
+          <thead>
+            <tr>
+              <th />
+              {spinners.colors.map((color) => (
+                <th key={color} align="left">
+                  <ParamLabel>{color}</ParamLabel>
+                </th>
+              ))}
+            </tr>
+          </thead>
           <tbody className="gap-2">
-            {spinnerSizes.map((size) => (
+            {spinners.sizes.map((size) => (
               <tr key={size}>
                 <td>
                   <ParamLabel className="pr-2">{size}</ParamLabel>
                 </td>
-                <td>
-                  <LoadingSpinner size={size as any} />
-                </td>
+                {spinners.colors.map((color) => (
+                  <td key={`${color}-${size}`}>
+                    <LoadingSpinner size={size as any} color={color as any} />
+                  </td>
+                ))}
               </tr>
             ))}
           </tbody>
