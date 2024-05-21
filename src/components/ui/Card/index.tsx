@@ -25,7 +25,7 @@ interface CardOwnProps {
   variant?: keyof (typeof classes)['variants']['variant']
 }
 
-type CardProps<T extends React.ElementType = 'div'> = CardOwnProps & {
+export type CardProps<T extends React.ElementType = 'div'> = CardOwnProps & {
   component?: T
 } & React.ComponentProps<T>
 
