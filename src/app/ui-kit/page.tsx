@@ -4,6 +4,7 @@ import { twMerge } from 'tailwind-merge'
 import Button from '@/components/ui/Button'
 import Typography from '@/components/ui/Typography'
 import LoadingSpinner from '@/components/ui/LoadingSpinner'
+import TextField from '@/components/ui/TextField'
 import Input from '@/components/ui/Input'
 
 import styles from './page.module.css'
@@ -128,10 +129,62 @@ export default function ComponentsPage() {
             </tr>
             <tr>
               <td>
-                <ParamLabel className="pr-2">Invalid</ParamLabel>
+                <ParamLabel className="pr-2">With error</ParamLabel>
               </td>
               <td>
-                <Input value="Invalid input" type="email" />
+                <Input value="Input with error" type="email" error />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <Typography
+        id="input"
+        variant="h2"
+        className="pt-6"
+        component="a"
+        href="#input"
+      >
+        TextField
+      </Typography>
+      <div className="max-w-full overflow-x-auto">
+        <table className={styles.table}>
+          <tbody className="gap-2">
+            <tr>
+              <td>
+                <ParamLabel className="pr-2">Default</ParamLabel>
+              </td>
+              <td>
+                <TextField
+                  label="Default text field"
+                  inputProps={{ placeholder: 'Default input' }}
+                  helperText="Helper text"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <ParamLabel className="pr-2">Disabled</ParamLabel>
+              </td>
+              <td>
+                <TextField
+                  label="Disabled text field"
+                  inputProps={{ placeholder: 'Default input', disabled: true }}
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <ParamLabel className="pr-2">With error</ParamLabel>
+              </td>
+              <td>
+                <TextField
+                  label="Text field with error"
+                  inputProps={{ placeholder: 'Default input' }}
+                  helperText="Validation failed"
+                  error
+                />
               </td>
             </tr>
           </tbody>
