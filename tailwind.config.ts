@@ -1,13 +1,9 @@
 import type { Config } from 'tailwindcss'
+import { withTV } from 'tailwind-variants/transformer'
 import myColors from './src/theme/colors'
 
-const config: Config = {
-  content: [
-    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/styles/**/*.{css,scss}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
+const config: Config = withTV({
+  content: ['./src/**/*.{mjs,js,ts,jsx,tsx,mdx}'],
   theme: {
     extend: {
       colors: { ...myColors },
@@ -21,6 +17,6 @@ const config: Config = {
     },
   },
   plugins: [],
-}
+})
 
 export default config
