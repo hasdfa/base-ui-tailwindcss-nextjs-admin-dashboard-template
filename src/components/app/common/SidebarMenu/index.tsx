@@ -27,7 +27,9 @@ export default function SidebarMenu(props: SidebarMenuProps) {
   React.useEffect(() => {
     setOptimisticPathname(originalPathname)
     props.mobileOnClose()
-  }, [originalPathname, props, props.mobileOnClose])
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [originalPathname])
 
   const getStartIcon = (selected: boolean) => {
     return selected && isLoading ? (

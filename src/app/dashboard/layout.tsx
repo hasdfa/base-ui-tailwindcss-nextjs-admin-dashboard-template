@@ -14,6 +14,7 @@ interface DashboardLayoutProps {
 export default function DashboardLayout(props: DashboardLayoutProps) {
   const [mobileOpen, setMobileOpen] = React.useState(false)
   const mobileOnClose = React.useCallback(() => setMobileOpen(false), [])
+  const mobileOnOpen = React.useCallback(() => setMobileOpen(true), [])
 
   return (
     <div className="min-h-[100dvh]">
@@ -28,7 +29,7 @@ export default function DashboardLayout(props: DashboardLayoutProps) {
           'transition-all transition-duration-500'
         )}
       >
-        <AppHeader setMobileOpen={setMobileOpen} className="md:hidden" />
+        <AppHeader setMobileOpen={mobileOnOpen} className="md:hidden" />
         <div
           className={twMerge(
             'flex-1 flex flex-col items-stretch justify-start',
