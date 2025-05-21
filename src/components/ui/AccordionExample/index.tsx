@@ -25,17 +25,13 @@ export default function AccordionExample() {
         >
           <Accordion.Item value="item-1" className="border-b border-gray-200">
             <Accordion.Header>
-              <Accordion.Trigger className="flex justify-between items-center w-full py-3 text-left text-gray-700 hover:text-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 rounded-md px-2">
-                {(props) => (
-                  <>
-                    <span>Accordion Item 1</span>
-                    {props['data-panel-open'] ? (
-                      <FiMinus className="h-5 w-5" />
-                    ) : (
-                      <FiPlus className="h-5 w-5" />
-                    )}
-                  </>
-                )}
+              <Accordion.Trigger
+                className="flex justify-between items-center w-full py-3 text-left text-gray-700 hover:text-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 rounded-md px-2"
+              >
+                <button>
+                  <span>Accordion Item 1</span>
+                  <FiMinus className="h-5 w-5" />
+                </button>
               </Accordion.Trigger>
             </Accordion.Header>
             <Accordion.Panel className="px-2 py-3 text-gray-600 text-sm">
@@ -46,16 +42,10 @@ export default function AccordionExample() {
           <Accordion.Item value="item-2" className="border-b border-gray-200">
             <Accordion.Header>
               <Accordion.Trigger className="flex justify-between items-center w-full py-3 text-left text-gray-700 hover:text-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 rounded-md px-2">
-                {(props) => (
-                  <>
-                    <span>Accordion Item 2</span>
-                    {props['data-panel-open'] ? (
-                      <FiMinus className="h-5 w-5" />
-                    ) : (
-                      <FiPlus className="h-5 w-5" />
-                    )}
-                  </>
-                )}
+                <button>
+                  <span>Accordion Item 2</span>
+                  <FiMinus className="h-5 w-5" />
+                </button>
               </Accordion.Trigger>
             </Accordion.Header>
             <Accordion.Panel className="px-2 py-3 text-gray-600 text-sm">

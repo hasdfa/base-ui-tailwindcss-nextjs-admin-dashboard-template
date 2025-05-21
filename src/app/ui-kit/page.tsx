@@ -1,3 +1,5 @@
+'use client'
+
 import * as React from 'react'
 import { twMerge } from 'tailwind-merge'
 
@@ -20,7 +22,8 @@ import { NumberField } from '@base-ui-components/react/number-field'
 import { Popover } from '@base-ui-components/react/popover'
 import { PreviewCard } from '@base-ui-components/react/preview-card'
 import { Progress } from '@base-ui-components/react/progress'
-import { RadioGroup, Radio } from '@base-ui-components/react/radio-group'
+import { Radio } from '@base-ui-components/react/radio'
+import { RadioGroup } from '@base-ui-components/react/radio-group'
 import { ScrollArea } from '@base-ui-components/react/scroll-area'
 import { Select } from '@base-ui-components/react/select'
 import { Separator } from '@base-ui-components/react/separator'
@@ -88,6 +91,9 @@ function ParamLabel({
 }
 
 export default function ComponentsPage() {
+  // Toast manager for programmatic toasts
+  const toastManager = Toast.useToastManager();
+
   return (
     <div className="col-span-12 gap-4 flex flex-col items-start w-full">
       <Typography variant="h1">All components</Typography>
@@ -364,18 +370,17 @@ export default function ComponentsPage() {
       </Typography>
       <div className="w-full max-w-md p-4 border border-gray-200 rounded-lg">
         <Collapsible.Root className="space-y-2">
-          <Collapsible.Trigger className="flex items-center justify-between w-full px-3 py-2 text-left text-gray-700 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-brand-500 rounded-md">
-            {(props) => (
-              <>
-                <span>Toggle Collapsible Panel</span>
-                <FiChevronDown
-                  className={twMerge(
-                    'h-5 w-5 transition-transform duration-200',
-                    props['data-panel-open'] && 'rotate-180'
-                  )}
-                />
-              </>
-            )}
+          <Collapsible.Trigger
+            className="flex items-center justify-between w-full px-3 py-2 text-left text-gray-700 bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-brand-500 rounded-md">
+            <button>
+              <span>Toggle Collapsible Panel</span>
+              <FiChevronDown
+                className={twMerge(
+                  'h-5 w-5 transition-transform duration-200',
+                  // props['data-panel-open'] && 'rotate-180'
+                )}
+              />
+            </button>
           </Collapsible.Trigger>
           <Collapsible.Panel className="px-3 py-2 text-gray-600 text-sm border border-gray-200 rounded-md data-[starting-style]:animate-slide-down data-[ending-style]:animate-slide-up">
             This is the content of the collapsible panel. It can be hidden or
@@ -396,9 +401,7 @@ export default function ComponentsPage() {
       </Typography>
       <div className="p-4 border border-gray-200 rounded-lg">
         <Dialog.Root>
-          <Dialog.Trigger asChild>
-            <Button variant="outlined">Open Dialog</Button>
-          </Dialog.Trigger>
+          <Dialog.Trigger render={<Button variant="outlined">Open Dialog</Button>} />
           <Dialog.Portal>
             <Dialog.Backdrop className="fixed inset-0 bg-black/40 data-[starting-style]:animate-fade-in data-[ending-style]:animate-fade-out" />
             <Dialog.Popup className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-lg shadow-xl w-full max-w-md data-[starting-style]:animate-slide-up-fade data-[ending-style]:animate-slide-down-fade">
@@ -412,12 +415,8 @@ export default function ComponentsPage() {
               {/* Example of content within dialog */}
               <Input placeholder="Example input inside dialog" className="mb-4" />
               <div className="mt-6 flex justify-end space-x-3">
-                <Dialog.Close asChild>
-                  <Button variant="text">Close</Button>
-                </Dialog.Close>
-                <Dialog.Close asChild>
-                  <Button variant="contained">Save Changes</Button>
-                </Dialog.Close>
+                <Dialog.Close render={<Button variant="text">Close</Button>} />
+                <Dialog.Close render={<Button variant="contained">Save Changes</Button>} />
               </div>
             </Dialog.Popup>
           </Dialog.Portal>
@@ -439,9 +438,7 @@ export default function ComponentsPage() {
           <Field.Label className="text-sm font-medium text-gray-700">
             Username
           </Field.Label>
-          <Field.Control asChild>
-            <Input placeholder="Enter your username" />
-          </Field.Control>
+          <Field.Control render={<Input placeholder="Enter your username" />} />
           <Field.Description className="text-xs text-gray-500">
             This will be your public display name.
           </Field.Description>
@@ -451,9 +448,7 @@ export default function ComponentsPage() {
           <Field.Label className="text-sm font-medium text-gray-700 data-[invalid]:text-red-600">
             Email Address
           </Field.Label>
-          <Field.Control asChild>
-            <Input type="email" placeholder="you@example.com" defaultValue="invalid-email" />
-          </Field.Control>
+          <Field.Control render={<Input type="email" placeholder="you@example.com" defaultValue="invalid-email" />} />
           <Field.Error className="text-xs text-red-500" match="valueMissing">
             Email is required.
           </Field.Error>
@@ -478,23 +473,20 @@ export default function ComponentsPage() {
         Form
       </Typography>
       <div className="w-full max-w-md p-4 border border-gray-200 rounded-lg">
-        <Form.Root
+        <Form
           className="space-y-6"
-          onSubmit={(e) => {
-            e.preventDefault()
-            alert('Form submitted! Check console for data.')
-            const formData = new FormData(e.currentTarget)
-            console.log(Object.fromEntries(formData.entries()))
+          onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+            e.preventDefault();
+            alert('Form submitted! Check console for data.');
+            const formData = new FormData(e.currentTarget);
+            console.log(Object.fromEntries(formData.entries()));
           }}
-          // errors={{ email: 'Server validation: This email is blocked.' }} // Example server error
         >
           <Field.Root name="fullName" className="space-y-1">
             <Field.Label className="text-sm font-medium text-gray-700">
               Full Name
             </Field.Label>
-            <Field.Control asChild>
-              <Input required placeholder="Enter your full name" />
-            </Field.Control>
+            <Field.Control render={<Input required placeholder="Enter your full name" />} />
             <Field.Error className="text-xs text-red-500" match="valueMissing">
               Full name is required.
             </Field.Error>
@@ -504,15 +496,13 @@ export default function ComponentsPage() {
             <Field.Label className="text-sm font-medium text-gray-700">
               Feedback
             </Field.Label>
-            <Field.Control asChild>
-              <Input
-                render={({ className, ...props }) => (
-                  <textarea {...props} className={twMerge(className, 'min-h-[80px]')} />
-                )}
-                required
-                placeholder="Your valuable feedback"
-              />
-            </Field.Control>
+            <Field.Control
+              render={({ className, ...props }) => (
+                <textarea {...props} className={twMerge(className, 'min-h-[80px]')} />
+              )}
+              required
+              placeholder="Your valuable feedback"
+            />
             <Field.Error className="text-xs text-red-500" match="valueMissing">
               Feedback cannot be empty.
             </Field.Error>
@@ -521,7 +511,7 @@ export default function ComponentsPage() {
           <Button type="submit" variant="contained" className="w-full">
             Submit Form
           </Button>
-        </Form.Root>
+        </Form>
       </div>
 
       {/* Fieldset Section */}
@@ -543,17 +533,13 @@ export default function ComponentsPage() {
             <Field.Label className="text-sm font-medium text-gray-700">
               Username
             </Field.Label>
-            <Field.Control asChild>
-              <Input placeholder="Enter username" />
-            </Field.Control>
+            <Field.Control render={<Input placeholder="Enter username" />} />
           </Field.Root>
           <Field.Root name="passwordSet" className="space-y-1">
             <Field.Label className="text-sm font-medium text-gray-700">
               Password
             </Field.Label>
-            <Field.Control asChild>
-              <Input type="password" placeholder="Enter password" />
-            </Field.Control>
+            <Field.Control render={<Input type="password" placeholder="Enter password" />} />
           </Field.Root>
         </Fieldset.Root>
       </div>
@@ -583,7 +569,7 @@ export default function ComponentsPage() {
           </Meter.Root>
         </div>
         <div>
-          <Meter.Root value={60} low={30} high={70} optimum={50} className="space-y-1">
+          <Meter.Root value={60} className="space-y-1">
             <div className="flex justify-between">
               <Meter.Label className="text-sm text-gray-700">
                 Task Completion (Optimum)
@@ -654,12 +640,10 @@ export default function ComponentsPage() {
       </Typography>
       <div className="p-4 border border-gray-200 rounded-lg">
         <Popover.Root>
-          <Popover.Trigger asChild>
-            <Button variant="outlined" size="sm">
-              <FiMoreHorizontal className="w-5 h-5 mr-1" />
-              Open Popover
-            </Button>
-          </Popover.Trigger>
+          <Popover.Trigger render={<Button variant="outlined" size="sm">
+            <FiMoreHorizontal className="w-5 h-5 mr-1" />
+            Open Popover
+          </Button>} />
           <Popover.Portal>
             <Popover.Positioner
               side="bottom"
@@ -785,32 +769,34 @@ export default function ComponentsPage() {
         Radio Group
       </Typography>
       <div className="w-full max-w-md p-4 border border-gray-200 rounded-lg">
-        <RadioGroup.Root defaultValue="option1" name="exampleOptions" className="space-y-2">
-          <Field.Label className="text-sm font-medium text-gray-700 mb-1 block">Choose an option:</Field.Label>
-          {[
-            { value: 'option1', label: 'Option One' },
-            { value: 'option2', label: 'Option Two' },
-            { value: 'option3', label: 'Option Three (Disabled)', disabled: true },
-          ].map((item) => (
-            <label
-              key={item.value}
-              className={twMerge(
-                "flex items-center space-x-2 p-2 rounded-md hover:bg-gray-50",
-                item.disabled ? "cursor-not-allowed text-gray-400" : "cursor-pointer"
-              )}
-            >
-              <Radio.Root
-                value={item.value}
-                id={`r-${item.value}`}
-                disabled={item.disabled}
-                className="flex items-center justify-center w-5 h-5 border-2 border-gray-400 rounded-full focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-1 data-[checked]:border-brand-500 data-[disabled]:border-gray-300 data-[disabled]:bg-gray-100"
+        <Field.Root name="exampleOptions">
+          <RadioGroup defaultValue="option1" name="exampleOptions" className="space-y-2">
+            <Field.Label className="text-sm font-medium text-gray-700 mb-1 block">Choose an option:</Field.Label>
+            {[
+              { value: 'option1', label: 'Option One' },
+              { value: 'option2', label: 'Option Two' },
+              { value: 'option3', label: 'Option Three (Disabled)', disabled: true },
+            ].map((item) => (
+              <label
+                key={item.value}
+                className={twMerge(
+                  "flex items-center space-x-2 p-2 rounded-md hover:bg-gray-50",
+                  item.disabled ? "cursor-not-allowed text-gray-400" : "cursor-pointer"
+                )}
               >
-                <Radio.Indicator className="w-2.5 h-2.5 bg-brand-500 rounded-full data-[disabled]:bg-gray-400" />
-              </Radio.Root>
-              <span>{item.label}</span>
-            </label>
-          ))}
-        </RadioGroup.Root>
+                <Radio.Root
+                  value={item.value}
+                  id={`r-${item.value}`}
+                  disabled={item.disabled}
+                  className="flex items-center justify-center w-5 h-5 border-2 border-gray-400 rounded-full focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-1 data-[checked]:border-brand-500 data-[disabled]:border-gray-300 data-[disabled]:bg-gray-100"
+                >
+                  <Radio.Indicator className="w-2.5 h-2.5 bg-brand-500 rounded-full data-[disabled]:bg-gray-400" />
+                </Radio.Root>
+                <span>{item.label}</span>
+              </label>
+            ))}
+          </RadioGroup>
+        </Field.Root>
       </div>
       
       {/* Scroll Area Section */}
@@ -866,7 +852,7 @@ export default function ComponentsPage() {
       </Typography>
       <div className="w-full max-w-xs p-4 border border-gray-200 rounded-lg">
         <Select.Root defaultValue="item2">
-          <Field.Label className="text-sm font-medium text-gray-700 mb-1 block">Choose an item:</Field.Label>
+          <label className="text-sm font-medium text-gray-700 mb-1 block">Choose an item:</label>
           <Select.Trigger className="flex items-center justify-between w-full px-3 py-2 text-left bg-white border border-gray-300 rounded-md shadow-sm hover:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500 focus:border-brand-500 data-[popup-open]:ring-1 data-[popup-open]:ring-brand-500">
             <Select.Value placeholder="Select an item..." className="text-sm text-gray-700" />
             <Select.Icon className="text-gray-500">
@@ -914,7 +900,7 @@ export default function ComponentsPage() {
           <p className="text-sm text-gray-700">Horizontal Separator:</p>
           <div className="flex flex-col space-y-2 mt-1">
             <span>Above</span>
-            <Separator.Root className="h-px bg-gray-300 my-2" />
+            <Separator className="h-px bg-gray-300 my-2" />
             <span>Below</span>
           </div>
         </div>
@@ -922,7 +908,7 @@ export default function ComponentsPage() {
           <p className="text-sm text-gray-700">Vertical Separator:</p>
           <div className="flex items-center space-x-2 mt-1 h-10">
             <span>Left</span>
-            <Separator.Root
+            <Separator
               orientation="vertical"
               className="w-px bg-gray-300 mx-2 self-stretch"
             />
@@ -1098,30 +1084,29 @@ export default function ComponentsPage() {
           <Button
             variant="outlined"
             onClick={() => {
-              Toast.show({
+              toastManager.add({
                 title: 'Success!',
                 description: 'Your changes have been saved successfully.',
-                type: 'success', // For potential styling based on type
-                duration: 3000,
-              })
+                type: 'success',
+                timeout: 3000,
+              });
             }}
           >
             Show Success Toast
           </Button>
-           <Button
+          <Button
             variant="outlined"
             className="ml-2"
             onClick={() => {
-              Toast.show({
+              toastManager.add({
                 title: 'Error Occurred',
                 description: 'Failed to update settings. Please try again.',
                 type: 'error',
-                duration: 5000,
-                action: <Toast.Action altText="Retry action">Retry</Toast.Action>
-              })
+                timeout: 5000,
+              });
             }}
           >
-            Show Error Toast with Action
+            Show Error Toast
           </Button>
           <Toast.Viewport className="fixed bottom-4 right-4 flex flex-col gap-2 w-80 z-50" />
         </Toast.Provider>
@@ -1132,26 +1117,26 @@ export default function ComponentsPage() {
         Toggle
       </Typography>
       <div className="w-full max-w-md p-4 border border-gray-200 rounded-lg flex space-x-2">
-        <Toggle.Root
+        <Toggle
           aria-label="Toggle bold"
           className="p-2 border border-gray-300 rounded-md data-[pressed]:bg-brand-100 data-[pressed]:text-brand-600 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-brand-500"
         >
           <FiBold className="w-5 h-5" />
-        </Toggle.Root>
-        <Toggle.Root
+        </Toggle>
+        <Toggle
           aria-label="Toggle italic"
           defaultPressed
           className="p-2 border border-gray-300 rounded-md data-[pressed]:bg-brand-100 data-[pressed]:text-brand-600 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-brand-500"
         >
           <FiItalic className="w-5 h-5" />
-        </Toggle.Root>
-         <Toggle.Root
+        </Toggle>
+        <Toggle
           aria-label="Toggle underline"
           disabled
           className="p-2 border border-gray-300 rounded-md data-[pressed]:bg-brand-100 data-[pressed]:text-brand-600 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-brand-500 data-[disabled]:opacity-50 data-[disabled]:cursor-not-allowed"
         >
           <FiUnderline className="w-5 h-5" />
-        </Toggle.Root>
+        </Toggle>
       </div>
 
       {/* Toggle Group Section */}
@@ -1159,28 +1144,28 @@ export default function ComponentsPage() {
         Toggle Group
       </Typography>
       <div className="w-full max-w-md p-4 border border-gray-200 rounded-lg">
-        <ToggleGroup.Root type="single" defaultValue="center" aria-label="Text alignment" className="flex space-x-1 p-1 bg-gray-100 rounded-md">
-          <ToggleGroup.Item value="left" aria-label="Align left" className="px-3 py-1.5 rounded data-[state=on]:bg-brand-500 data-[state=on]:text-white hover:bg-gray-200 data-[state=off]:text-gray-600 focus:z-10 focus:outline-none focus:ring-1 focus:ring-brand-500">
+        <ToggleGroup defaultValue={['center']} aria-label="Text alignment" className="flex space-x-1 p-1 bg-gray-100 rounded-md">
+          <Toggle value="left" aria-label="Align left" className="px-3 py-1.5 rounded data-[state=on]:bg-brand-500 data-[state=on]:text-white hover:bg-gray-200 data-[state=off]:text-gray-600 focus:z-10 focus:outline-none focus:ring-1 focus:ring-brand-500">
             Left
-          </ToggleGroup.Item>
-          <ToggleGroup.Item value="center" aria-label="Align center" className="px-3 py-1.5 rounded data-[state=on]:bg-brand-500 data-[state=on]:text-white hover:bg-gray-200 data-[state=off]:text-gray-600 focus:z-10 focus:outline-none focus:ring-1 focus:ring-brand-500">
+          </Toggle>
+          <Toggle value="center" aria-label="Align center" className="px-3 py-1.5 rounded data-[state=on]:bg-brand-500 data-[state=on]:text-white hover:bg-gray-200 data-[state=off]:text-gray-600 focus:z-10 focus:outline-none focus:ring-1 focus:ring-brand-500">
             Center
-          </ToggleGroup.Item>
-          <ToggleGroup.Item value="right" aria-label="Align right" className="px-3 py-1.5 rounded data-[state=on]:bg-brand-500 data-[state=on]:text-white hover:bg-gray-200 data-[state=off]:text-gray-600 focus:z-10 focus:outline-none focus:ring-1 focus:ring-brand-500">
+          </Toggle>
+          <Toggle value="right" aria-label="Align right" className="px-3 py-1.5 rounded data-[state=on]:bg-brand-500 data-[state=on]:text-white hover:bg-gray-200 data-[state=off]:text-gray-600 focus:z-10 focus:outline-none focus:ring-1 focus:ring-brand-500">
             Right
-          </ToggleGroup.Item>
-        </ToggleGroup.Root>
-        <ToggleGroup.Root type="multiple" aria-label="Font style" className="flex space-x-1 mt-4 p-1 bg-gray-100 rounded-md">
-          <ToggleGroup.Item value="bold" aria-label="Bold" className="p-2 rounded data-[state=on]:bg-brand-500 data-[state=on]:text-white hover:bg-gray-200 data-[state=off]:text-gray-600 focus:z-10 focus:outline-none focus:ring-1 focus:ring-brand-500">
+          </Toggle>
+        </ToggleGroup>
+        <ToggleGroup toggleMultiple={true} defaultValue={['bold']} aria-label="Font style" className="flex space-x-1 mt-4 p-1 bg-gray-100 rounded-md">
+          <Toggle value="bold" aria-label="Bold" className="p-2 rounded data-[state=on]:bg-brand-500 data-[state=on]:text-white hover:bg-gray-200 data-[state=off]:text-gray-600 focus:z-10 focus:outline-none focus:ring-1 focus:ring-brand-500">
             <FiBold className="w-5 h-5" />
-          </ToggleGroup.Item>
-          <ToggleGroup.Item value="italic" aria-label="Italic" className="p-2 rounded data-[state=on]:bg-brand-500 data-[state=on]:text-white hover:bg-gray-200 data-[state=off]:text-gray-600 focus:z-10 focus:outline-none focus:ring-1 focus:ring-brand-500">
+          </Toggle>
+          <Toggle value="italic" aria-label="Italic" className="p-2 rounded data-[state=on]:bg-brand-500 data-[state=on]:text-white hover:bg-gray-200 data-[state=off]:text-gray-600 focus:z-10 focus:outline-none focus:ring-1 focus:ring-brand-500">
             <FiItalic className="w-5 h-5" />
-          </ToggleGroup.Item>
-          <ToggleGroup.Item value="underline" aria-label="Underline" className="p-2 rounded data-[state=on]:bg-brand-500 data-[state=on]:text-white hover:bg-gray-200 data-[state=off]:text-gray-600 focus:z-10 focus:outline-none focus:ring-1 focus:ring-brand-500">
+          </Toggle>
+          <Toggle value="underline" aria-label="Underline" className="p-2 rounded data-[state=on]:bg-brand-500 data-[state=on]:text-white hover:bg-gray-200 data-[state=off]:text-gray-600 focus:z-10 focus:outline-none focus:ring-1 focus:ring-brand-500">
             <FiUnderline className="w-5 h-5" />
-          </ToggleGroup.Item>
-        </ToggleGroup.Root>
+          </Toggle>
+        </ToggleGroup>
       </div>
 
       {/* Toolbar Section */}
@@ -1212,11 +1197,9 @@ export default function ComponentsPage() {
       <div className="w-full max-w-md p-4 border border-gray-200 rounded-lg">
         <Tooltip.Provider>
           <Tooltip.Root>
-            <Tooltip.Trigger asChild>
-              <Button variant="outlined" className="mr-2">
-                <FiInfo className="w-4 h-4 mr-1" /> Hover for Tooltip
-              </Button>
-            </Tooltip.Trigger>
+            <Tooltip.Trigger render={<Button variant="outlined" className="mr-2">
+              <FiInfo className="w-4 h-4 mr-1" /> Hover for Tooltip
+            </Button>} />
             <Tooltip.Portal>
               <Tooltip.Positioner side="top" align="center" sideOffset={5} className="z-50">
                 <Tooltip.Popup className="bg-gray-800 text-white text-xs px-2.5 py-1.5 rounded-md shadow-lg data-[starting-style]:animate-fade-in data-[ending-style]:animate-fade-out">
@@ -1228,11 +1211,9 @@ export default function ComponentsPage() {
           </Tooltip.Root>
 
           <Tooltip.Root>
-            <Tooltip.Trigger asChild>
-               <span className="text-brand-500 underline cursor-pointer">
-                Another trigger
-              </span>
-            </Tooltip.Trigger>
+            <Tooltip.Trigger render={<span className="text-brand-500 underline cursor-pointer">
+              Another trigger
+            </span>} />
             <Tooltip.Portal>
               <Tooltip.Positioner side="bottom" align="start" sideOffset={5} className="z-50">
                 <Tooltip.Popup className="bg-gray-800 text-white text-xs px-2.5 py-1.5 rounded-md shadow-lg">
@@ -1247,50 +1228,3 @@ export default function ComponentsPage() {
     </div>
   )
 }
-
-// Helper component for Toast example, to render list of toasts
-const ToastList = () => {
-  const { toasts } = Toast.useToastManager();
-  return toasts.map((toast) => (
-    <Toast.Root
-      key={toast.id}
-      toast={toast}
-      className={twMerge(
-        "bg-white border border-gray-200 rounded-lg shadow-lg p-4 flex items-start space-x-3 data-[starting-style]:animate-slide-in-right data-[ending-style]:animate-slide-out-right",
-        toast.type === 'success' && 'border-l-4 border-l-green-500',
-        toast.type === 'error' && 'border-l-4 border-l-red-500',
-      )}
-    >
-      <div className="flex-1">
-        <Toast.Title className="text-sm font-semibold text-gray-800" />
-        <Toast.Description className="text-sm text-gray-600 mt-0.5" />
-      </div>
-      {toast.action && <Toast.Action asChild><Button variant="text" size="sm" className="mt-1">{toast.action}</Button></Toast.Action>}
-      <Toast.Close className="p-1 rounded-full hover:bg-gray-100 text-gray-500 focus:outline-none focus:ring-1 focus:ring-brand-500 -mr-1 -mt-1">
-        <FiX className="w-4 h-4" />
-      </Toast.Close>
-    </Toast.Root>
-  ));
-};
-
-// Add this at the end of the file, outside the ComponentsPage function
-// This ensures Toast.Provider wraps the ToastList and the buttons that trigger toasts.
-const OriginalComponentsPage = ComponentsPage;
-const ComponentsPageWithToastProvider = () => (
-  // It's generally better to have Toast.Provider higher up,
-  // but for a self-contained example on the UI kit page,
-  // we can wrap the section or the button that triggers toasts.
-  // However, to make the Toast.Viewport work correctly with the button,
-  // the provider should ideally be an ancestor to both.
-  // For this example, I'll put the ToastList directly in the Toast section.
-  // The `Toast.show` is a static method that works as long as a Provider is somewhere in the tree.
-  // To render the toasts themselves, Toast.Viewport and Toast.Root need to be within a provider.
-  // The example in the docs has the ToastList within the Provider.
-  // The `ToastButton` in docs uses `useToastManager` which needs Provider as ancestor.
-  // I will make the Toast section self-contained with its own Provider.
-  // The `ToastList` helper component will be used inside the Toast section.
-  <OriginalComponentsPage />
-);
-
-// The final export will be the page, the ToastList is just a helper for within the Toast section.
-export default ComponentsPage;

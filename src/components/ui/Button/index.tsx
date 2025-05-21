@@ -1,4 +1,8 @@
+'use client'
+
 import * as React from 'react'
+import { useRender } from '@base-ui-components/react/use-render'
+import { mergeProps } from '@base-ui-components/react/merge-props';
 import { twMerge } from 'tailwind-merge'
 import { tv } from 'tailwind-variants'
 
@@ -43,23 +47,25 @@ const classes = tv({
 })
 
 // Updated ButtonProps to extend React.ButtonHTMLAttributes
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends useRender.ComponentProps<'button'> {
   variant?: keyof (typeof classes)['variants']['variant']
   size?: keyof (typeof classes)['variants']['size']
 }
 
 const Button = React.forwardRef(function Button(
-  { className, size, variant, ...props }: ButtonProps,
+  props: ButtonProps,
   ref: React.ForwardedRef<HTMLButtonElement>
 ) {
-  return (
-    // Replaced BaseButton with native button element
-    <button
-      {...props}
-      className={twMerge(classes({ size, variant }), className)}
-      ref={ref}
-    />
-  )
+  const { render = <button />, size, variant, className, ...otherProps } = props;
+  const { renderElement } = useRender({
+    refs: [ref],
+    render: render,
+    props: mergeProps(otherProps, {
+      className: twMerge(classes({ size, variant }), className),
+    }),
+  })
+
+  return renderElement()
 })
 
 export default Button

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { twMerge } from 'tailwind-merge'
-import { Input } from '@base-ui-components/react/input' // Changed import
+import { Input as BaseInput } from '@base-ui-components/react/input' // Changed import
 
 // Updated InputProps
 export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
@@ -9,7 +9,7 @@ export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
 
 export default function Input({ className, error, ...props }: InputProps) {
   return (
-    <Input
+    <BaseInput
       {...props}
       data-invalid={error ? true : undefined} // Use data-invalid for error state
       className={twMerge(
