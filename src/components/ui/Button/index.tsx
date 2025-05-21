@@ -2,10 +2,7 @@ import * as React from 'react'
 import { twMerge } from 'tailwind-merge'
 import { tv } from 'tailwind-variants'
 
-import {
-  Button as BaseButton,
-  ButtonProps as BaseButtonProps,
-} from '@mui/base/Button'
+// Removed BaseButton import
 
 const classes = tv({
   base: twMerge(
@@ -45,7 +42,8 @@ const classes = tv({
   },
 })
 
-export interface ButtonProps extends BaseButtonProps {
+// Updated ButtonProps to extend React.ButtonHTMLAttributes
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: keyof (typeof classes)['variants']['variant']
   size?: keyof (typeof classes)['variants']['size']
 }
@@ -55,7 +53,8 @@ const Button = React.forwardRef(function Button(
   ref: React.ForwardedRef<HTMLButtonElement>
 ) {
   return (
-    <BaseButton
+    // Replaced BaseButton with native button element
+    <button
       {...props}
       className={twMerge(classes({ size, variant }), className)}
       ref={ref}
