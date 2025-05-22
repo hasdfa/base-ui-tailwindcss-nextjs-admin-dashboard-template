@@ -1,6 +1,7 @@
 import * as React from 'react'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { Toast } from '@base-ui-components/react/toast'
 
 import './globals.css'
 import '../components/ui/index.css'
@@ -28,7 +29,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <div className="root">
+          <Toast.Provider>
+            {children}
+          </Toast.Provider>
+        </div>
+      </body>
     </html>
   )
 }

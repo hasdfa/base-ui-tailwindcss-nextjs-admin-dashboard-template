@@ -5,7 +5,7 @@ import Typography from '@/components/ui/Typography'
 
 export default function TasksPage() {
   const { slug } = useParams()
-  const status = slug[0] || 'all'
+  const status = slug?.[0] || 'all'
 
   return (
     <>

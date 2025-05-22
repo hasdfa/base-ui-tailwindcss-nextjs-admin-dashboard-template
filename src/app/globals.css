@@ -12,3 +12,7 @@ html {
     text-wrap: balance;
   }
 }
+
+.root {
+  isolation: isolate;
+}

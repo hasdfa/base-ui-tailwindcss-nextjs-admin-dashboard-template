@@ -76,15 +76,11 @@ export default function SidebarMenu(props: SidebarMenuProps) {
       })}
 
       <div className="absolute bottom-1 left-0 right-0 h-10 flex flex-col items-center px-2">
-        <Link href="/ui-kit" passHref legacyBehavior>
-          <Button
-            variant="contained"
-            className="w-full"
-            href="/app/all-components"
-          >
-            All components
-          </Button>
-        </Link>
+        <Button
+          variant="contained"
+          className="w-full"
+          render={<Link href="/ui-kit" passHref legacyBehavior>All components</Link>}
+        />
       </div>
     </>
   )

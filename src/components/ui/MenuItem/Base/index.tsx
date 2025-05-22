@@ -1,8 +1,12 @@
+'use client'
+
 import * as React from 'react'
+import { useRender } from '@base-ui-components/react/use-render'
+import { mergeProps } from '@base-ui-components/react/merge-props';
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
 
-import { Button, ButtonProps } from '@mui/base/Button'
+import Button, { ButtonProps } from '@/components/ui/Button'
 
 import styles from './index.module.css'
 
@@ -28,6 +32,7 @@ const BaseMenuItem = React.forwardRef(function BaseMenuItem(
   const child = (
     <Button
       {...props}
+      variant="text"
       className={twMerge(
         'base-MenuItem-root',
         styles.root,
